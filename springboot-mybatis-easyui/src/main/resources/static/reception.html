@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>前台</title>
+    <link rel="stylesheet" type="text/css" href="/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/themes/icon.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+    <style type="text/css">
+        .menuA{
+            text-decoration :none;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function(){
+            $(".menuA").click(function(){
+                var contentText = this.innerHTML;
+                var url = this.href;
+                //alert(url);
+                createTab(contentText,url);
+                // 超链接就不跳转
+                return false;
+            });
+        });
+
+        function createTab(contentText,url){
+            // 判断选项卡是否存在:
+            var flag = $("#tt").tabs("exists",contentText);
+            if(flag){
+                // 如果已经存在，让其被选中
+                $("#tt").tabs("select",contentText);
+            }else{
+                // 如果不存在,创建新的选项卡
+                $('#tt').tabs('add',{
+                    title:contentText,
+                    content:createUrl(url),
+                    closable:true
+                });
+            }
+        }
+
+        function createUrl(url){
+            return "<iframe src='"+url+"' style='width:100%;height:95%;border:none;'></iframe>";
+        }
+    </script>
+</head>
+<body>
+<div id="cc" class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north',title:'商场后台管理',split:true" style="height:100px;"></div>
+    <div data-options="region:'west',title:'系统菜单',split:true" style="width:200px;">
+        <div id="aa" class="easyui-accordion" data-options="fit:true">
+            <div title="员工管理" data-options="iconCls:'icon-man'" style="overflow:auto;padding:10px;">
+                <a href="emp.html" class="menuA">员工列表</a>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',title:''" style="padding:5px;background:#eee;">
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <div title="数据显示" style="padding:20px;display:none;">
+                <h1>欢迎光临</h1>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

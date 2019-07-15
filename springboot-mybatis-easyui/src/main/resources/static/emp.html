@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#dg').datagrid({    
+		    url:'findByPage',
+			type:'post',
+		    columns:[[    
+		        {field:'emp_name',title:'员工姓名',width:200},    
+		        {field:'emp_sex',title:'员工性别',width:200},    
+		        {field:'emp_age',title:'员工年龄',width:200},
+		        {field:'emp_phone',title:'手机号码',width:200} ,   
+		        {field:'emp_dep',title:'职位',width:200} , 
+		    ]],
+		    fitColumns:false,
+		 // 显示分页工具条
+	        pagination:true,
+	        // 初始化的页数
+	        pageNumber:1,
+	        // 每页显示记录数:
+	        pageSize:3,
+	        // 分页工具条中下拉列表中的值：
+	        pageList:[3,5,10],
+	        // 隔行换色
+	        striped:true,
+	        singleSelect:true,
+	        toolbar: [{
+	    		iconCls: 'icon-add',
+	    		handler: function(){
+	    			$("#winAdd").window("open");
+	    			}
+	    		},
+	    		{
+	    		iconCls: 'icon-remove',
+	    		handler: function(){
+	    			deleteById();
+	    			}
+	    		},
+	    		{
+		    		iconCls: 'icon-edit',
+		    		handler: function(){
+		    			editById()
+		    	}
+	    	}],
+
+		});  
+	})
+	
+	function save(){
+		$('#formAdd').form({
+		    url:"addEmployee",
+			type:'post',
+			contentType: 'application/json; charset=utf-8',
+		    success:function(data){    
+		       var jsonData = eval("("+data+")");
+		       $.messager.show({
+		    		title:'提示消息',
+		    		msg:jsonData.msg,
+		    		timeout:3000,
+		    		showType:'slide'
+		    	});
+		    	// 关闭窗口:
+		    	$("#winAdd").window("close");
+		    	// 重新加载数据:
+		    	$("#dg").datagrid("reload");
+		    }    
+		});
+
+		// submit the form    
+		$('#formAdd').submit();
+	}
+	function update(){
+		$('#formUpdate').form({    
+		    url:"updateEmployee",
+			type:'post',
+		    success:function(data){    
+		       var jsonData = eval("("+data+")");
+		       $.messager.show({
+		    		title:'提示消息',
+		    		msg:jsonData.msg,
+		    		timeout:3000,
+		    		showType:'slide'
+		    	});
+		    	// 关闭窗口:
+		    	$("#winUpdate").window("close");
+		    	// 重新加载数据:
+		    	$("#dg").datagrid("reload");
+		    }    
+		});    
+		// submit the form    
+		$('#formUpdate').submit();  
+	}
+	function deleteById(){
+		var row = $('#dg').datagrid('getSelected');
+		if(row){
+			$.messager.confirm('确认','确认要删除：'+row.emp_name+'吗？',function(flag){
+				if(flag){
+					//alert(row.emp_id);
+					$.post("deleteEmployee",{_method:"DELETE","emp_id":row.emp_id},function(data){
+						$.messager.show({
+				    		title:'提示消息',
+				    		msg:data.msg,
+				    		timeout:5000,
+				    		showType:'slide'
+				    	});
+						$("#dg").datagrid("reload");
+					},"json");
+				}				
+			});			
+		}
+		else{
+			alert("dont find");
+		}
+	}
+	function editById(){
+		var row = $('#dg').datagrid('getSelected');
+		if(row){
+			$("#winUpdate").window("open");
+			$('#formUpdate').form('load',"findById?emp_id="+row.emp_id+"");
+		}
+		else{
+			alert("没有选中列！");
+		}
+	}
+	function getFormData($form) { var unindexed_array = $form.serializeArray(); var indexed_array = {}; $.map(unindexed_array, function (n, i) { indexed_array[n['name']] = n['value']; }); return indexed_array; }
+
+</script>
+</head>
+<body>
+<table id="dg"></table>  
+
+	<!-- 添加客户的表单，默认是隐藏的 -->
+	<div id="winAdd" class="easyui-window" title="添加" style="width:440px;height:200px"   
+	        data-options="iconCls:'icon-save',modal:true,closed:true">   
+		    
+	        <form id="formAdd" method="post" datatype="application/json; charset=utf-8">
+				 <table style="margin:auto">
+				 	<tr>
+				 		<td>员工姓名：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_name" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>员工性别：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_sex" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>员工年龄：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_age" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>手机号码：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_phone" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>职位：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_dep" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>				 		
+				 		<td>
+							<button class="easyui-linkbutton" type="button" onclick="save()">保存</button>
+						</td>
+				 		</td>
+				 	</tr>
+				 </table>
+			</form>
+		</div>
+	<div id="winUpdate" class="easyui-window" title="修改" style="width:440px;height:200px"   
+	        data-options="iconCls:'icon-save',modal:true,closed:true">   		    
+	        <form id="formUpdate" method="post">
+	        	<input type="hidden" name="emp_id"/>
+				<table style="margin:auto">
+				 	<tr>
+				 		<td>员工姓名：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_name" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>员工性别：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_sex" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>员工年龄：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_age" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>手机号码：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_phone" style="width:200px">
+				 		</td>
+				 	</tr>
+				 	<tr>
+				 		<td>职位：</td>
+				 		<td>
+				 			<input class="easyui-textbox" name="emp_dep" style="width:200px">
+				 		</td>
+				 	</tr>
+					<tr>
+						<td rowspan=2>
+							<button class="easyui-linkbutton" type="button" onclick="update()">保存</button>
+						</td>
+					</tr>
+				</table>   
+			</form>
+		</div>
+</body>
+</html>

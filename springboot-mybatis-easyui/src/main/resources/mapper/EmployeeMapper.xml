@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.easyui.mapper.EmployeeMapper">
+
+    <resultMap id="employeeMap" type="com.web.easyui.entity.Employee">
+        <id property="emp_id" column="emp_id" javaType="java.lang.Long"></id>
+        <result property="emp_name" column="emp_name" javaType="java.lang.String"></result>
+        <result property="emp_sex" column="emp_sex" javaType="java.lang.String"></result>
+        <result property="emp_age" column="emp_age" javaType="java.lang.Integer"></result>
+        <result property="emp_phone" column="emp_phone" javaType="java.lang.String"></result>
+        <result property="emp_dep" column="emp_dep" javaType="java.lang.String"></result>
+    </resultMap>
+
+    <select id="getAllEmployee" resultMap="employeeMap">
+        select * from employees
+    </select>
+
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        select count(*) from employees
+    </select>
+
+    <select id="findByPage" resultMap="employeeMap">
+        select * from employees limit #{start},#{rows}
+    </select>
+
+    <select id="findById" resultMap="employeeMap" parameterType="java.lang.Long">
+        select * from employees where emp_id = #{emp_id}
+    </select>
+
+    <insert id="addEmployee" parameterType="com.web.easyui.entity.Employee">
+        insert into employees ( emp_id, emp_name, emp_sex, emp_age, emp_phone, emp_dep )
+        values ( #{emp_id}, #{emp_name}, #{emp_sex}, #{emp_age}, #{emp_phone}, #{emp_dep} )
+    </insert>
+
+    <delete id="deleteEmployee" parameterType="com.web.easyui.entity.Employee">
+        delete from employees where emp_id = #{emp_id}
+    </delete>
+    <update id="updateEmployee" parameterType="com.web.easyui.entity.Employee">
+        update employees SET emp_id=#{emp_id},emp_name=#{emp_name},emp_sex= #{emp_sex},
+        emp_age=#{emp_age},emp_phone= #{emp_phone},  emp_dep=#{emp_dep}
+        where emp_id=#{emp_id}
+    </update>
+</mapper>
