@@ -1,4 +1,8 @@
-# spring-boot-practice
+# spring-boot-mybatis实践
+
+### 概述
+
+Spring Boot和MyBatis+MySql的完整示例。
 
 [原项目链接](https://github.com/hansonwang99/Spring-Boot-In-Action/)
 
