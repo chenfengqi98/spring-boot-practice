@@ -26,7 +26,7 @@ Spring Boot+MyBatis+EasyUI 实现简单的后台管理系统，基本的增删�
 
 复制EasyUI需要的静态文件到static中。
 
-![avatar](img\01.png)
+![avatar](img/01.png)
 
 配置`application.properties`
 
@@ -254,7 +254,7 @@ public class EmployeeController {
 
 > 1. 分页查询
 
-![avatar](img\02.png)
+![avatar](img/02.png)
 
 ---
 
@@ -262,9 +262,9 @@ public class EmployeeController {
 
 > 2. 添加员工
 
-![avatar](img\03.png)
+![avatar](img/03.png)
 
-![avatar](img\04.png)
+![avatar](img/04.png)
 
 ---
 
@@ -272,9 +272,9 @@ public class EmployeeController {
 
 > 3. 修改员工
 
-![avatar](img\05.png)
+![avatar](img/05.png)
 
-![avatar](img\06.png)
+![avatar](img/06.png)
 
 ---
 
@@ -282,9 +282,9 @@ public class EmployeeController {
 
 > 4.  删除员工
 
-![avatar](img\07.png)
+![avatar](img/07.png)
 
-![avatar](img\08.png)
+![avatar](img/08.png)
 
 ---
 

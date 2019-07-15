@@ -167,7 +167,7 @@ public class DemoApplication {
 
 刚开始测试的时候，第一次使用PostMan这个软件，有点不会用。一直使用的是下图的方式，一直报RequestBody的参数错误。
 
-![avatar](img\01.png)
+![avatar](img/01.png)
 
 后来仔细看了原博主的测试图片，需要发送JSON格式的数据。下图是正确的方式。
 
