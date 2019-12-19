@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.chen.cloud.eurekaserver.EurekaServerApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.061 s <<< FAILURE! - in com.chen.cloud.eurekaserver.EurekaServerApplicationTests
+initializationError(com.chen.cloud.eurekaserver.EurekaServerApplicationTests)  Time elapsed: 0.007 s  <<< ERROR!
+java.lang.Exception: Method contextLoads() should be public
+
